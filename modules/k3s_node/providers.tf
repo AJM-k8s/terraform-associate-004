@@ -17,8 +17,3 @@ terraform {
     }
   }
 }
-
-provider "proxmox" {
-  endpoint = "https://192.168.50.65:8006/"
-  insecure = true
-}
