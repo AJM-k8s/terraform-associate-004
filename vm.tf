@@ -53,6 +53,13 @@ resource "proxmox_virtual_environment_vm" "k3s_server" {
 		}
 	}
 
+	lifecycle {
+	  precondition {
+		condition = contains ([for d in data.proxmox_datastores.pve.datastores : d.id if d.enabled], "local-lvm")
+		error_message = "Datastore 'local-lvm' is not present or enabled on node pve check /etc/pve/storage.cfg"
+	  }
+	}
+
 
 	tags = ["k3s", "terraform"] # Just labels, no functional behaviour
 }
